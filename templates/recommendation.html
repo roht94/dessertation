@@ -1,0 +1,136 @@
+{% extends "header_footer.html" %}
+{% block title %}
+Recommendation
+{% endblock %}
+{% block content %}
+<!-- Hero/Header Section (copied from Home page) -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container my-5 py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-3 text-white animated slideInLeft">Personalized<br>Diet Recommendations</h1>
+                <p class="text-white animated slideInLeft mb-4 pb-2">Get your AI-powered meal plan and nutrient goals tailored to your profile. Make healthier choices with NutriByte's smart recommendations!</p>
+            </div>
+            <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                <img class="img-fluid" src="../static/img/hero.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero/Header Section -->
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="mb-3 text-primary"><i class="fa fa-lightbulb me-2"></i>Today's Recommendations</h4>
+                    <p class="mb-4">According to your data, here are meal recommendations for you today.</p>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <i class="fa fa-coffee fa-2x text-primary mb-2"></i>
+                                    <h5 class="card-title">Breakfast</h5>
+                                    <hr>
+                                    <div>{{bf_prediction}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <i class="fa fa-utensils fa-2x text-primary mb-2"></i>
+                                    <h5 class="card-title">Lunch</h5>
+                                    <hr>
+                                    <div>{{lunch_prediction}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <i class="fa fa-ice-cream fa-2x text-primary mb-2"></i>
+                                    <h5 class="card-title">Snack</h5>
+                                    <hr>
+                                    <div>{{snack_prediction}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <i class="fa fa-drumstick-bite fa-2x text-primary mb-2"></i>
+                                    <h5 class="card-title">Dinner</h5>
+                                    <hr>
+                                    <div>{{dinner_prediction}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <h4 class="mb-3 text-primary"><i class="fa fa-bullseye me-2"></i>Target Nutrient Goals</h4>
+                    <p class="mb-4">Your Goal: <b>{{ user_goal.replace('_', ' ').title() }}</b></p>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Breakfast</h6>
+                                    <hr>
+                                    <b>Calorie:</b> {{bf_cal}}kcal<br>
+                                    <b>Protein:</b> {{bf_protein}}g<br>
+                                    <b>Carb:</b> {{bf_carb}}g<br>
+                                    <b>Fat:</b> {{bf_fat}}g <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Lunch</h6>
+                                    <hr>
+                                    <b>Calorie:</b> {{lunch_cal}}kcal<br>
+                                    <b>Protein:</b> {{lunch_protein}}g<br>
+                                    <b>Carb:</b> {{lunch_carb}}g<br>
+                                    <b>Fat:</b> {{lunch_fat}}g<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Snack</h6>
+                                    <hr>
+                                    <b>Calorie:</b> {{snack_cal}}kcal<br>
+                                    <b>Protein:</b> {{snack_protein}}g<br>
+                                    <b>Carb:</b> {{snack_carb}}g<br>
+                                    <b>Fat:</b> {{snack_fat}}g<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100 text-center border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title">Dinner</h6>
+                                    <hr>
+                                    <b>Calorie:</b> {{dinner_cal}}kcal<br>
+                                    <b>Protein:</b> {{dinner_protein}}g<br>
+                                    <b>Carb:</b> {{dinner_carb}}g<br>
+                                    <b>Fat:</b> {{dinner_fat}}g<br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="alert alert-info mt-3" role="alert">
+                        <b>Please adjust the ingredients of each meal to hit your nutrient goals for optimal results. These numbers are baseline and may vary individually.</b>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a onclick="history.back(-1)"><button class="btn btn-outline-primary px-4">Back</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

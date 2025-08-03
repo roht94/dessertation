@@ -1,0 +1,65 @@
+{% extends "header_footer.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<!-- Hero Header Start -->
+<div class="container-xxl position-relative p-0">
+    <div class="container-xxl py-5 bg-dark hero-header mb-5">
+        <div class="container text-center my-5 pt-5 pb-4">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">About Us</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center text-uppercase">
+                    <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">About</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Hero Header End -->
+
+<!-- About Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">About Us</h5>
+            <h1 class="mb-5">Welcome to NutriByte</h1>
+        </div>
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-12 text-start">
+                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="{{ url_for('static', filename='img/about-1.jpg') }}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h5 class="section-title ff-secondary text-start text-primary fw-normal">Our Mission</h5>
+                <h1 class="mb-4">Welcome to <i class="fa fa-utensils text-primary me-2"></i>NutriByte</h1>
+                <p class="mb-4">At NutriByte, we believe that understanding your nutrition is the first step towards a healthier lifestyle. Our mission is to empower you with the tools and insights needed to make informed decisions about your diet and achieve your personal wellness goals.</p>
+                <p class="mb-4">Using cutting-edge AI, our application instantly recognizes food items from your photos, providing you with a detailed breakdown of calories and macronutrients. Whether your goal is weight loss, muscle gain, or simply maintaining a balanced diet, NutriByte is your dedicated partner in health.</p>
+                <div class="row g-4 mb-4">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                            <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-camera-retro"></i></h1>
+                            <div class="ps-4">
+                                <h6 class="text-uppercase mb-0">Instant Recognition</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                            <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-chart-line"></i></h1>
+                            <div class="ps-4">
+                                <h6 class="text-uppercase mb-0">Personalized Tracking</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+{% endblock %}

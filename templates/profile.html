@@ -1,0 +1,71 @@
+{% extends "header_footer.html" %}
+
+{% block content %}
+<!-- Hero/Header Section -->
+<div class="container-xxl py-5 bg-primary hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-4 text-white mb-3 animated slideInDown">{{ user.username }}'s Profile</h1>
+        <p class="lead text-white-50">Your health journey, goals, and nutrition at a glance.</p>
+    </div>
+</div>
+
+<div class="container-xxl">
+    <div class="container">
+        <div class="row g-4 mb-5">
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-center bg-info text-white">
+                        <h5 class="card-title mb-0">Personal Info</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><b>Name:</b> {{ user.username }}</p>
+                        <p><b>Email:</b> {{ user.email }}</p>
+                        <p><b>Age:</b> {{ user.age }}</p>
+                        <p><b>Gender:</b> {{ user.gender }}</p>
+                        <p><b>Weight:</b> {{ user.weight }} lbs</p>
+                        <p><b>Height:</b> {{ user.feet }}'{{ user.inches }}''</p>
+                        <p><b>BMI:</b> {{ user.bmi }}</p>
+                        <p><b>Body Fat:</b> {{ user.bodyfat }}%</p>
+                        <p><b>Status:</b> {{ user.status }}</p>
+                        <p><b>Journey Day:</b> {{ user.journey }}</p>
+                        <p><b>Start Date:</b> {{ user.startdate }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-center bg-success text-white">
+                        <h5 class="card-title mb-0">Lifestyle & Preferences</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><b>Goal:</b> {{ user.goal }}</p>
+                        <p><b>Activity Level:</b> {{ user.activitylevel }}</p>
+                        <p><b>Vegan:</b> {{ user.vegan }}</p>
+                        <p><b>Allergy:</b> {{ user.allergy }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-center bg-warning text-white">
+                        <h5 class="card-title mb-0">Macros & Nutrition Goals</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><b>Calories:</b> {{ user.calorie_goal }} kcal</p>
+                        <p><b>Protein:</b> {{ user.protein_goal }} g</p>
+                        <p><b>Carbs:</b> {{ user.carb_goal }} g</p>
+                        <p><b>Fat:</b> {{ user.fat_goal }} g</p>
+                        <p><b>Fiber:</b> {{ user.fiber_goal }} g</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-4 col-md-6 text-center">
+                <a href="/update_profile" class="btn btn-primary btn-lg px-4 mb-2">Edit Profile</a>
+                <a onclick="history.back(-1)" class="btn btn-outline-secondary btn-lg px-4 mb-2">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

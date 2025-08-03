@@ -1,0 +1,124 @@
+{% extends "header_footer.html" %}
+{% block title %}
+Progress
+{% endblock %}
+{% block content %}
+<!-- Hero/Header Section (copied from Home page) -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container my-5 py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-3 text-white animated slideInLeft">Your Progress</h1>
+                <p class="text-white animated slideInLeft mb-4 pb-2">Visualize your weight trends and analytics. Stay motivated and track your journey with NutriByte!</p>
+            </div>
+            <div class="col-lg-6 text-center text-lg-end overflow-hidden">
+                <img class="img-fluid" src="../static/img/hero.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hero/Header Section -->
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 mb-4">
+                <div class="card-body p-4">
+                    <h4 class="mb-3 text-primary"><i class="fa fa-chart-line me-2"></i>Weight Progress (Daily)</h4>
+                    <div class="d-flex justify-content-center">
+                        <canvas id="dailyprogress" width="600" height="400" style="max-width:100%;"></canvas>
+                    </div>
+                    <div class="text-end mt-2">
+                        <a href="/daily_detail" class="btn btn-outline-primary">More Detail</a>
+                    </div>
+                    <hr class="my-4">
+                    <h4 class="mb-3 text-primary"><i class="fa fa-calendar-week me-2"></i>Weight Progress (Weekly)</h4>
+                    <div class="d-flex justify-content-center">
+                        <canvas id="weeklyprogress" width="600" height="400" style="max-width:100%;"></canvas>
+                    </div>
+                    <div class="text-end mt-2">
+                        <a href="/weekly_detail" class="btn btn-outline-primary">More Detail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden data for JS -->
+<div id="days" style="display:none;">{% for i in days %}{{i}} {% endfor %}</div>
+<div id="weeks" style="display:none;">{% for i in weeks %}{{i}} {% endfor %}</div>
+<div id="d_weight" style="display:none;">{% for w in d_weight %}{{ w if w else 'null' }} {% endfor %}</div>
+<div id="w_weight" style="display:none;">{% for w in w_weight %}{{ w if w else 'null' }} {% endfor %}</div>
+{% endblock %}
+
+{% block script2 %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script >
+function trimTrailingNulls(labels, data) {
+  let lastValid = data.length - 1;
+  while (lastValid >= 0 && (data[lastValid] === '' || data[lastValid] === 'null' || data[lastValid] === null)) {
+    lastValid--;
+  }
+  return {
+    labels: labels.slice(0, lastValid + 1),
+    data: data.slice(0, lastValid + 1)
+  };
+}
+
+dates = document.getElementById('days').innerHTML;
+days = dates.split(/[\s,]+/).filter(x => x);
+dates = document.getElementById('d_weight').innerHTML;
+weightes = dates.split(/[\s,]+/).filter(x => x);
+let trimmedDaily = trimTrailingNulls(days, weightes);
+new Chart("dailyprogress", {
+  type: "line",
+  data: {
+    labels: trimmedDaily.labels,
+    datasets: [{ 
+      label: 'Weight(lb)',
+      data: trimmedDaily.data,
+      borderColor: "red",
+      tension: 0.4 // Makes the line curved
+    }]
+  },
+  options: {
+    legend: {display: 'bottom'}
+  }
+});
+</script>
+<script >
+function trimTrailingNulls(labels, data) {
+  let lastValid = data.length - 1;
+  while (lastValid >= 0 && (data[lastValid] === '' || data[lastValid] === 'null' || data[lastValid] === null)) {
+    lastValid--;
+  }
+  return {
+    labels: labels.slice(0, lastValid + 1),
+    data: data.slice(0, lastValid + 1)
+  };
+}
+week = document.getElementById('weeks').innerHTML;
+weeks = week.split(/[\s,]+/).filter(x => x);
+weight = document.getElementById('w_weight').innerHTML;
+weightes = weight.split(/[\s,]+/).filter(x => x);
+let trimmedWeekly = trimTrailingNulls(weeks, weightes);
+new Chart("weeklyprogress", {
+  type: "line",
+  data: {
+    labels: trimmedWeekly.labels,
+    datasets: [{ 
+      label: 'Weight(lb)',
+      data: trimmedWeekly.data,
+      borderColor: "blue",
+      tension: 0.4 // Makes the line curved
+    }]
+  },
+  options: {
+    legend: {display: 'bottom'}
+  }
+});
+</script>
+{% endblock %}
+

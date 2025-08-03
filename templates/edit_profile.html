@@ -1,0 +1,116 @@
+{% extends "header_footer.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block content %}
+<!-- Hero/Header Section -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-4 text-white mb-3 animated slideInDown">Edit Your Profile</h1>
+        <p class="lead text-white-50">Update your personal details and health preferences to keep your NutriByte experience personalized.</p>
+    </div>
+</div>
+
+<div class="container-xxl">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-10 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="card shadow-sm" style="border-radius: 15px;">
+                    <div class="card-header text-center bg-primary text-white" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                        <i class="fa fa-user-edit fa-2x mb-2"></i>
+                        <h4 class="card-title mb-0">Edit Profile</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="/update_profile" method="POST">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" name="name" class="form-control" value="{{name}}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" value="{{email}}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" value="{{password}}" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input type="number" min="10" max="70" id="age" name="age" class="form-control" value="{{age}}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select name="gender" id="gender" class="form-select" required>
+                                        <option value="{{gender}}">{{gender}}</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="weight" class="form-label">Base Weight (lb)</label>
+                                    <input type="number" min="90" max="600" id="weight" name="weight" class="form-control" value="{{weight}}" required>
+                                    <div class="form-text">This updates your base weight used for calculations. For daily tracking, use the weight prompt on the home page.</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="vegan" class="form-label">Vegan</label>
+                                    <select name="vegan" id="vegan" class="form-select">
+                                        <option value="{{vegan}}">{{vegan}}</option>
+                                        <option value="no">No</option>
+                                        <option value="yes">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="feet" class="form-label">Height (ft)</label>
+                                    <input type="number" min="4" max="7" id="feet" name="feet" class="form-control" value="{{ft}}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="inches" class="form-label">Height (in)</label>
+                                    <input type="number" min="0" max="12" id="inches" name="inches" class="form-control" value="{{inch}}" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="allergy" class="form-label">Allergy</label>
+                                <select name="allergy" id="allergy" class="form-select">
+                                    <option value="None" {% if allergy == 'None' %}selected{% endif %}>None</option>
+                                    <option value="Lactose" {% if allergy == 'Lactose' %}selected{% endif %}>Lactose</option>
+                                    <option value="Gluten" {% if allergy == 'Gluten' %}selected{% endif %}>Gluten</option>
+                                    <option value="Bean/Nuts" {% if allergy == 'Bean/Nuts' %}selected{% endif %}>Bean/Nuts</option>
+                                    <option value="Eggs" {% if allergy == 'Eggs' %}selected{% endif %}>Eggs</option>
+                                    <option value="Seafood" {% if allergy == 'Seafood' %}selected{% endif %}>Seafood</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="activity" class="form-label">Activity Level</label>
+                                <select name="activity" id="activity" class="form-select" required>
+                                    <option value="sedentary" {% if activity == 'sedentary' %}selected{% endif %}>Sedentary (little or no exercise)</option>
+                                    <option value="lightly active" {% if activity == 'lightly active' %}selected{% endif %}>Lightly active (light exercise/sports 1-3 days/week)</option>
+                                    <option value="moderately active" {% if activity == 'moderately active' %}selected{% endif %}>Moderately active (moderate exercise/sports 3-5 days/week)</option>
+                                    <option value="very active" {% if activity == 'very active' %}selected{% endif %}>Very active (hard exercise/sports 6-7 days a week)</option>
+                                    <option value="extra active" {% if activity == 'extra active' %}selected{% endif %}>Extra active (very hard exercise/sports and a physical job)</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="goal" class="form-label">Goal</label>
+                                <select name="goal" id="goal" class="form-select" required>
+                                    <option value="{{goal}}">{{goal.replace('_', ' ').title()}}</option>
+                                    <option value="weight_loss">Weight Loss</option>
+                                    <option value="weight_gain">Weight Gain</option>
+                                    <option value="muscle_gain">Muscle Gain</option>
+                                    <option value="maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <input type="submit" value="Save Changes" class="btn btn-primary btn-lg">
+                                <a href="/profile" class="btn btn-outline-secondary btn-lg">Back</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

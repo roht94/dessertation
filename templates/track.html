@@ -1,0 +1,140 @@
+{% extends "header_footer.html" %}
+{% block title %}Track{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  $(function() {
+    $('.chart').easyPieChart({
+      size: 130,
+      barColor: "#fea116",
+      scaleLength: 0,
+      lineWidth: 8,
+      trackColor: "#f0f0f0",
+      lineCap: "circle",
+      animate: 2000,
+    });
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero/Header Section with breadcrumb -->
+<div class="container-xxl py-5 bg-dark hero-header mb-5">
+    <div class="container text-center my-5 pt-5 pb-4">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Track Your Nutrition</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center text-uppercase">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Track</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- End Hero/Header Section -->
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-12 text-start">
+                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="../static/img/about-1.jpg" alt="Nutrition Tracking">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h5 class="section-title ff-secondary text-start text-primary fw-normal">Your Daily Meals</h5>
+                <h1 class="mb-4">Track & Analyze Your Intake</h1>
+                <p class="mb-4">Monitor your daily meals and macronutrient intake. Stay on top of your health goals with NutriByte's intuitive tracking tools.</p>
+                <div class="row g-4 mb-4">
+                    {% for meal, icon, color, meal_var, numbers_var in [
+                        ("Breakfast", "fa-coffee", "#fea116", breakfast, session['bf_numbers']),
+                        ("Lunch", "fa-hamburger", "#28a745", lunch, session['lunch_numbers']),
+                        ("Snack", "fa-apple-alt", "#17a2b8", snack, session['snack_numbers']),
+                        ("Dinner", "fa-utensils", "#6f42c1", dinner, session['dinner_numbers'])
+                    ] %}
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center border-start border-5" style="border-color: {{ color }} !important;">
+                            <h1 class="flex-shrink-0 display-5 mb-0" style="color: {{ color }};"><i class="fa {{ icon }}"></i></h1>
+                            <div class="ps-4">
+                                <h6 class="text-uppercase mb-0">{{ meal }}</h6>
+                                <form action="/add_food" method="POST" class="mb-1">
+                                    <input type="hidden" value="{{ meal }}" name="mealtime">
+                                    <input type="submit" value="Add Food" class="btn btn-primary btn-sm">
+                                </form>
+                                {% if numbers_var %}
+                                <div class="small text-muted">Protein: {{ numbers_var[1] }}g, Carb: {{ numbers_var[2] }}g, Fat: {{ numbers_var[3] }}g, Calorie: {{ numbers_var[0] }} kcal</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Today Consumption Section -->
+        <div class="row mb-4 mt-5">
+            <div class="col-12 text-center">
+                <h3 class="section-title ff-secondary text-center text-primary fw-normal mb-4">Today Consumption</h3>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center mb-5">
+            {% for label, percent, consumed, goal, color, icon in [
+                ("Calories", cal_percent, cal_consumed, session['u_info'][17], "#fea116", "fa-fire"),
+                ("Protein", p_percent, p_consumed, session['u_info'][14], "#28a745", "fa-drumstick-bite"),
+                ("Carb", c_percent, c_consumed, session['u_info'][15], "#17a2b8", "fa-bread-slice"),
+                ("Fat", f_percent, f_consumed, session['u_info'][16], "#6f42c1", "fa-cheese")
+            ] %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="card shadow-sm h-100" style="border-radius: 18px; margin-bottom: 24px;">
+                    <div class="card-header text-center" style="background: {{ color }}; border-top-left-radius: 18px; border-top-right-radius: 18px;">
+                        <i class="fa {{ icon }} fa-2x text-white mb-2"></i>
+                        <h6 class="card-title text-white mb-0">{{ label }}</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="chart mx-auto mb-2" data-percent="{{ percent }}">{{ consumed }}{% if label == 'Calories' %} kcal{% else %}g{% endif %}</div>
+                        <div class="small text-muted">Goal: {{ goal }}{% if label == 'Calories' %} kcal{% else %}g{% endif %}</div>
+                        <div class="small">Reached <b>{{ percent }}%</b></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Feature Highlights -->
+        <div class="row g-4 mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                    <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-camera-retro"></i></h1>
+                    <div class="ps-4">
+                        <h6 class="text-uppercase mb-0">Instant Food Logging</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                    <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-chart-line"></i></h1>
+                    <div class="ps-4">
+                        <h6 class="text-uppercase mb-0">Progress Analytics</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                    <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-balance-scale"></i></h1>
+                    <div class="ps-4">
+                        <h6 class="text-uppercase mb-0">Balanced Diet</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="d-flex align-items-center border-start border-5 border-primary px-3">
+                    <h1 class="flex-shrink-0 display-5 text-primary mb-0"><i class="fa fa-heartbeat"></i></h1>
+                    <div class="ps-4">
+                        <h6 class="text-uppercase mb-0">Wellness Goals</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
